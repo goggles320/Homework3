@@ -3,6 +3,7 @@ var generateBtn = document.querySelector("#generate");
 var dispText = document.querySelector("textarea");
 var content = "";
 var length = "";
+//set the ASCII values for all required characters
 var arrayLow = ["97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122"];
 var arrayUp = ["65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90"];
 var arrayNum = ["48","49","50","51","52","53","54","55","56","57"];
@@ -23,52 +24,53 @@ function userInput() {
   //Set length of password and convert to integer value
   var inputLength = prompt("Please select password length - 8 characters minimum)");
   length = parseInt(inputLength);
-  //Conditions from user
+  //Conditions from user:
+  //Check if user wants lower case in password, if yes - add array of character to final array
   var lowerCase = confirm("Use Lowercase in password?");
   if (lowerCase){
     arrayFinal = arrayLow;
   }
-  //debugger;
+  //Check if user wants upper case in password, if yes - add array of character to final array
   var upperCase = confirm("Use Uppercase in password?");
   if (upperCase){
     arrayFinal = arrayFinal.concat(arrayUp);
   }
+  //Check if user wants numbers in password, if yes - add array of character to final array
   var numbers = confirm("Use Numbers in password?");
   if (numbers){
     arrayFinal = arrayFinal.concat(arrayNum);
   }
+  //Check if user wants special in password, if yes - add array of character to final array
   var spChar = confirm("Use special characters in password?");
   if (spChar){
     arrayFinal = arrayFinal.concat(arraySp);
   }
 }
 
-// Generate random password
+// Function to generate password
 function generatePassword(){
-
+  //Runs iterations based from prompt command in above userInput() Function
   for (var i=0; i < length; i++) {
 
-    //Set the parameter based on what user requires in terms of upper/lower case, special characters, etc.
+    //Randoms a character in the final array and converts into integer
     key = parseInt(arrayFinal[Math.floor(Math.random() * arrayFinal.length)]);
-    console.log(key);
-        
+       
     //Converts coressponding ASCII number into printed character
     var res = String.fromCharCode(key);
-    //debugger;
+    
     //Add new character into existing character block
     newContent = content + res;
-    //console.log(newContent);
-    //debugger;
+    
     //Update randomized password onto screen
-    //dispText.textContent = newContent;
     dispText.append(newContent);
 
   }  
 
 }
 
-// Write password to the #password input
+//Write password to the #password input
 function writePassword() {
+  //clear the existing password generated
   newContent = "";
   content = "";
   userInput();
@@ -83,5 +85,5 @@ function writePassword() {
 //EXECUTION
 //------------------------------------------------------------------------------------------------------
 
-//Add event listener to generate button
+//Add event listener to execute function when button is clicked
 generateBtn.addEventListener("click", writePassword);
